@@ -1,16 +1,11 @@
 const fs = require('fs');
+const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ.,;!?'.split('');
+const message = readText();
 
-class Cipher {
 
-    constructor() {
-        this.alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ.,;!?'.split('');
-        this.message = this.readText();
-    }
-
-    readText() {
+    function readText() {
         try {
             const data = fs.readFileSync('cipher6.txt', 'utf8');
-
             // Remove caracteres não alfabéticos e coloca em letras maiúsculas
             return data.toUpperCase().replace(/[^A-Z]/g, ''); 
 
@@ -20,23 +15,22 @@ class Cipher {
         }
     }
 
-    kasiskiRepeat(tam) {
+    function kasiskiRepeat(tam) {
         const repeats = {};
-       
+        
         // Encontra repetições de padrões no texto
-        for (let i = 0; i <= this.message.length - tam; i++) {
-            const p = this.message.substring(i, i + tam);
+        for (let i = 0; i <= message.length - tam; i++) {
+            const p = message.substring(i, i + tam);
             if (repeats[p]) {
                 repeats[p].push(i);
             } else {
                 repeats[p] = [i];
             }
         }
-
         return repeats;
     }
 
-    kasiskiDist(repeats){
+    function kasiskiDist(repeats){
         const dists = [];
         for (let i = 0; i < repeats.length - 1; i++) {
             for (let j = i + 1; j < repeats.length; j++) {
@@ -50,20 +44,21 @@ class Cipher {
     }
 
     // Encontrar possíveis comprimentos de chave
-    kasiskiComp(keyMin, keyMax){
+    function kasiskiComp(keyMin, keyMax){
         const comp = [];
 
         for (let i = keyMin; i <= keyMax; i++) {
-            const rep = this.kasiskiRepeat(i);
-            const dis = this.kasiskiDist(rep);
+            const rep = kasiskiRepeat(i);
+            const dis = kasiskiDist(rep);
+            console.log(dis);
             if (dis.length > 0) {
                 comp.push({ i, dis });
             }
         }
         return comp;
     }
-    
-    descriptografar(message, chave) {
+
+    function descriptografar(message, chave) {
         const listaDeCaracteres = message.split('');
         const listaDeCaracteresDescriptografados = [];
         const stringCaracteres = this.alpha.join('');
@@ -84,11 +79,9 @@ class Cipher {
         return listaDeCaracteresDescriptografados.join('');
     }
 
-}
 
-const cipher = new Cipher();
-const comp = cipher.kasiskiComp(3, 6);
-console.log("Possíveis comprimentos de chave e distâncias:");
-comp.forEach(item => {
-    console.log(`Comprimento: ${item.i}, Distâncias: ${item.dis}`);
-});
+    const comp = kasiskiComp(2, 5);
+    console.log("Possíveis comprimentos de chave e distâncias:");
+    comp.forEach(item => {
+        console.log(item.i, item.dis);
+    });
