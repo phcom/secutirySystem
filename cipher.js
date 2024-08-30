@@ -14,10 +14,10 @@ const message = readText();
         }
     }
 
+    // Encontra repetições de padrões no texto
     function kasiskiRepeat(tam) {
-        const repeats = {};
-        
-        // Encontra repetições de padrões no texto
+        const repeats = {};    
+       
         for (let i = 0; i <= message.length - tam; i++) {
             const p = message.substring(i, i + tam);
             if (repeats[p]) {
@@ -26,7 +26,6 @@ const message = readText();
                 repeats[p] = [i];
             }
         }
-        console.log(repeats)
         return repeats;
     }
 
@@ -36,8 +35,8 @@ const message = readText();
             if (ind.length > 1) {
                 for (let i = 0; i < ind.length - 1; i++) {
                     for (let j = i + 1; j < ind.length; j++) {
-                        const d = ind[j] - ind[i];
-                        if (dist > 0) {
+                        const d = ind[j][j] - ind[j][0];
+                        if (d > 0) {
                             dist.push(d);
                         }
                     }
@@ -54,7 +53,6 @@ const message = readText();
         for (let i = keyMin; i <= keyMax; i++) {
             const rep = kasiskiRepeat(i);
             const dis = kasiskiDist(rep);
-            console.log(dis);
             if (dis.length > 0) {
                 comp.push({ i, dis });
             }
