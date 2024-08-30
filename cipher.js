@@ -1,9 +1,6 @@
 const fs = require('fs');
 const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ.,;!?'.split('');
 const message = readText();
-const dists = [];
-
-
 
     function readText() {
         try {
@@ -29,19 +26,25 @@ const dists = [];
                 repeats[p] = [i];
             }
         }
+        console.log(repeats)
         return repeats;
     }
 
     function kasiskiDist(repeats){
-        for (let i = 0; i < repeats.length - 1; i++) {
-            for (let j = i + 1; j < repeats.length; j++) {
-                const d = repeats[j] - repeats[i];
-                if (d > 0) {
-                    dists.push(d);
+        const dist = [];
+        for (const ind of Object.entries(repeats)) {
+            if (ind.length > 1) {
+                for (let i = 0; i < ind.length - 1; i++) {
+                    for (let j = i + 1; j < ind.length; j++) {
+                        const d = ind[j] - ind[i];
+                        if (dist > 0) {
+                            dist.push(d);
+                        }
+                    }
                 }
             }
         }
-        return dists;
+        return dist;
     }
 
     // Encontrar possíveis comprimentos de key
