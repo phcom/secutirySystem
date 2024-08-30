@@ -1,6 +1,8 @@
 const fs = require('fs');
 const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ.,;!?'.split('');
 const message = readText();
+const dists = [];
+
 
 
     function readText() {
@@ -31,7 +33,6 @@ const message = readText();
     }
 
     function kasiskiDist(repeats){
-        const dists = [];
         for (let i = 0; i < repeats.length - 1; i++) {
             for (let j = i + 1; j < repeats.length; j++) {
                 const d = repeats[j] - repeats[i];
@@ -43,7 +44,7 @@ const message = readText();
         return dists;
     }
 
-    // Encontrar possíveis comprimentos de chave
+    // Encontrar possíveis comprimentos de key
     function kasiskiComp(keyMin, keyMax){
         const comp = [];
 
@@ -58,30 +59,30 @@ const message = readText();
         return comp;
     }
 
-    function descriptografar(message, chave) {
-        const listaDeCaracteres = message.split('');
-        const listaDeCaracteresDescriptografados = [];
-        const stringCaracteres = this.alpha.join('');
+    function desciprit(message, key) {
+        const charList = message.split('');
+        const charListD = [];
+        const stringCaracteres = alpha.join('');
 
-        for (const c of listaDeCaracteres) {
-            const letraMaiuscula = c.toUpperCase();
-            const posicaoLetra = stringCaracteres.indexOf(letraMaiuscula);
-            const indiceLetraDescriptografada = (posicaoLetra + chave) % this.alpha.length;
-            let letraDescriptografada = stringCaracteres[indiceLetraDescriptografada];
+        for (const c of charList) {
+            const charM = c.toUpperCase();
+            const letterP = stringCaracteres.indexOf(charM);
+            const i = (letterP + key) % alpha.length;
+            let charD = stringCaracteres[i];
 
             if (c === '#') {
-                letraDescriptografada = ' ';
+                charD = ' ';
             }
 
-            listaDeCaracteresDescriptografados.push(letraDescriptografada);
+            charListD.push(charD);
         }
 
-        return listaDeCaracteresDescriptografados.join('');
+        return charListD.join('');
     }
 
 
     const comp = kasiskiComp(2, 5);
-    console.log("Possíveis comprimentos de chave e distâncias:");
+    console.log("Possíveis comprimentos de key e distâncias:");
     comp.forEach(item => {
         console.log(item.i, item.dis);
     });
