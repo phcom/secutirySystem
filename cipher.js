@@ -4,7 +4,7 @@ const message = readText();
 
     function readText() {
         try {
-            const data = fs.readFileSync('cipher6.txt', 'utf8');
+            const data = fs.readFileSync('cipher_texts/cipher6.txt', 'utf8');
             // Remove caracteres não alfabéticos e coloca em letras maiúsculas
             return data.toUpperCase().replace(/[^A-Z]/g, ''); 
 
